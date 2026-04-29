@@ -1,0 +1,60 @@
+Yocto imx-6.6.52-2.2.1.xml(NXP i.MX) Setup  Fix Guide
+
+
+🔹 1. Install Required Packages
+
+sudo apt update
+sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential \
+chrpath socat cpio python3 python3-pip python3-pexpect xz-utils \
+debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa \
+libsdl1.2-dev pylint xterm liblz4-tool zstd
+
+🔹 2. Install repo Tool
+
+
+mkdir -p ~/bin
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+chmod a+x ~/bin/repo
+echo 'export PATH=~/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+Verify:
+
+repo --version
+
+🔹 3. Download Yocto BSP (imx-5.15.71-2.2.2.xml)
+
+
+mkdir ~/Yocto_Project
+cd ~/Yocto_Project
+
+repo init -u https://github.com/nxp-imx/imx-manifest \
+          -b imx-linux-scarthgap \
+          -m imx-6.6.52-2.2.1.xml
+🔹 4. Sync Source
+
+repo sync -j$(nproc)
+
+🔹 5. Setup Build
+
+DISTRO=fsl-imx-xwayland 
+
+MACHINE=imx8mp-lpddr4-evk \
+source imx-setup-release.sh -b build
+
+
+Accept license:
+y
+
+* download liblz4-tool
+export LC_ALL=C
+
+sudo apt install liblz4-tool
+
+ == build == 
+ 
+build for full image =  bitbake imx-image-full 
+
+build for minimal image = bitbake core-image-minimal
+ 
+
