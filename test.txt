@@ -1,3 +1,9 @@
 hi this my first file push to the git
 this new line 
+UPDTED A LINE
+a
+e
+i
+o
+u
 
